@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+	<title>NodeLib-Tool Login</title>
+	<script src="https://lib.lookh5.com/jslib/zepto.1.2.0.min.js"></script>
+	<script src="https://lib.lookh5.com/jslib/vue.2.6.10.min.js"></script>
+	<link rel="stylesheet" href="https://lib.lookh5.com/jslib/element-ui.2.8.2.css">
+	<script src="https://lib.lookh5.com/jslib/element-ui.2.8.2.min.js"></script>
+	<style>
+		.content {
+			display: block;
+			position: absolute;
+			left: 50%;
+			top: 50%;
+		}
+
+		.login-box {
+			margin-left: -190px;
+			margin-top: -50%;
+			position: relative;
+			display: block;
+			width: 300px;
+			border-radius: 4px;
+			padding: 40px 40px 15px;
+			box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
+		}
+
+		.login-box .el-table {
+			display: block;
+			font-size: 26px !important;
+		}
+	</style>
+</head>
+<body>
+<div id="app">
+	<div class="content">
+		<div class="login-box">
+			<el-form ref="loginForm" :model="form" :rules="rules">
+				<el-form-item label="name" label-width="50px" prop="name">
+					<el-input v-model="form.name" clearable @focus="errorMsg=''"></el-input>
+				</el-form-item>
+				<el-form-item label="pass" label-width="50px" prop="pass">
+					<el-input v-model="form.pass" show-password @focus="errorMsg=''"></el-input>
+				</el-form-item>
+				<el-form-item v-show="errorMsg!=''" :label="errorMsg"></el-form-item>
+				<el-form-item align="center">
+					<el-button type="primary" @click="onClick_loginBtn">Login</el-button>
+				</el-form-item>
+			</el-form>
+		</div>
+	</div>
+</div>
+</body>
+</html>
+<script>
+	var _api = window.location.href;
+	_api = _api.substr(0, _api.lastIndexOf("/") + 1);
+	var _loading;
+
+	var Main = {
+		data() {
+			return {
+				errorMsg: "",
+				form: {
+					name: "",
+					pass: ""
+				},
+				rules: {
+					name: [{validator: (r, v, c) => v === "" && c(new Error("请输入账号")) || c()}],
+					pass: [{validator: (r, v, c) => v === "" && c(new Error("请输入密码")) || c()}]
+				}
+			}
+		},
+		created()
+		{
+		},
+		methods: {
+			onClick_loginBtn()
+			{
+				this.$refs["loginForm"].validate((valid) =>
+				{
+					if (valid)
+					{
+						callNet("admin_login", {
+							name: this.form.name,
+							pass: this.form.pass
+						}).then(($data)=>
+						{
+							if ($data.status == 1)
+							{
+								window.location.reload();
+							}
+						}, ($err)=>
+						{
+						})
+					}
+					else
+					{
+						console.log('error submit!!');
+						return false;
+					}
+				});
+			}
+		}
+	}
+	var Ctor = Vue.extend(Main)
+	new Ctor().$mount('#app');
+
+	function callNet($url, $data, $callBack)
+	{
+		var promise = new Promise((resolved, reject)=>
+		{
+			$.ajax({
+				type: "POST",
+				url: _api + $url,
+				contentType: "application/json",
+				dataType: "json",
+				data: $data && JSON.stringify($data) || "{}",
+				success: function ($resultData)
+				{
+					resolved($resultData);
+				},
+				error: function ($errorData)
+				{
+					reject($errorData);
+				}
+			});
+		})
+		return promise;
+	}
+
+	function trace()
+	{
+		var arr = [];
+		for (var i = 0; i < arguments.length; i++)
+		{
+			arr.push(arguments[i]);
+		}
+		console.log.apply(console, arr);
+	}
+</script>

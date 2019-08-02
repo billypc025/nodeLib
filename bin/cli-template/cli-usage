@@ -1,0 +1,30 @@
+========================================================
+
+Usage: nodecli <Options> [arguments]
+       nodecli <Options> <Types> [arguments]
+
+
+--- Options:
+init            初始化工程目录
+update          更新框架库及本地工具库
+open            打开框架库所在目录
+add [Types]     根据类型新增router / server / module / bin /test
+start [router]  开始运行
+
+--- add <Types>:
+router <name>           新增一个router
+server [router] [type]  新增一个服务类型
+            type可选参数:
+                http    用于建立http服务
+                socket  用于建立socket服务
+                redis   用于连接redis服务
+                mysql   用于连接mysql服务
+                web     用于建立web服务
+                script  用于脚本编写
+                express 按照express框架建立web服务
+                test    接口测试用例类型
+module [name]           新增一个模块，用于服务调用
+test   [name]           新增一个用例目录，用于接口测试
+bin <name>              新增命令，用于命令行调用
+
+========================================================

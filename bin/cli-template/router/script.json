@@ -1,0 +1,12 @@
+{
+  "name": "$请输入本服务名称",
+  "type": "script",
+  "param": {
+	"path": "test.hello",
+	"param": "billy"
+  },
+  "module": {
+	"test": "./module/test"
+  },
+  "enabled": true
+}

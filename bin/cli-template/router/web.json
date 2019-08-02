@@ -1,0 +1,9 @@
+{
+  "name": "$请输入本服务的名称",
+  "type": "web",
+  "param": {
+	"port": 80,
+	"webroot": "./webroot"
+  },
+  "enabled": true
+}

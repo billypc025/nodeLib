@@ -1,0 +1,14 @@
+{
+  "name": "proj",
+  "version": "1.0.0",
+  "description": "",
+  "main": "",
+  "scripts": {
+	"": "node "
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {},
+  "devDependencies": {},
+  "proj": "nodecli"
+}

@@ -1,0 +1,12 @@
+{
+  "name": "$请输入本服务的名称",
+  "type": "express",
+  "param": {
+	"port": 8003,
+	"path": "/test"
+  },
+  "module": {
+	"/test": "./src/module/test"
+  },
+  "enabled": false
+}

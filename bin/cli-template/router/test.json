@@ -1,0 +1,26 @@
+{
+  "name": "testCase",
+  "type": "test",
+  "param": {
+	"url": "http://192.168.12.219:8001",
+	"method": "post",
+	"req": {
+	  "result": {
+		"name": "status",
+		"type": "number",
+		"success": 1
+	  },
+	  "data": {
+		"name": "data"
+	  },
+	  "error": {
+		"name": "status",
+		"type": "number"
+	  }
+	}
+  },
+  "module": [
+	"./module/case1"
+  ],
+  "enabled": true
+}

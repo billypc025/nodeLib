@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title></title>
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black">
+	<meta name="format-detection" content="telephone=no">
+	<meta name="format-detection" content="email=no">
+	<meta name="viewport"
+		  content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1.0, minimum-scale=1.0">
+	<link rel="stylesheet" type="text/css" href="./index.css" media="all">
+	<script src="./zepto.min.js"></script>
+	<script src="./socket.io.js"></script>
+</head>
+<body>
+<div class="net">
+	<div class="block">
+		<label>http</label><input id="domainTxt" value=""/>
+		<label>socket</label><input id="ipTxt" value="https://api.lookh5.com:8002/test"/>
+	</div>
+	<div style="margin: 0px">
+		<br/><br/>
+		<button id="connectBtn" class="sendBtn">连接Socket</button>
+	</div>
+</div>
+<div class="net">
+	<div class="block call">
+		<label>接口</label><input id="cmdTxt" value="login"/>
+		<label>参数</label><input id="paramTxt" value="1"/>
+	</div>
+	<div class="block" style="width: 260px">
+		<button id="sendGetBtn">Http get 请求</button>
+		<button id="sendSocketBtn">Socket 请求</button>
+		<button id="sendPostBtn">Http post 请求</button>
+	</div>
+</div>
+<div id="logTxt" class="log-text"></div>
+<div></div>
+</body>
+<script>
+	init();
+	initEvent();
+
+	function init()
+	{
+		window.socketIsConnected = false;
+
+		var ls = window.localStorage;
+		if (ls.domain)
+		{
+			$("#domainTxt").val(ls.domain);
+		}
+
+		if (ls.ip)
+		{
+			$("#ipTxt").val(ls.ip);
+		}
+
+		if (ls.cmd)
+		{
+			$("#cmdTxt").val(ls.cmd);
+		}
+
+		if (ls.param)
+		{
+			$("#paramTxt").val(ls.param);
+		}
+
+		$("#sendSocketBtn").get(0).disabled = true;
+	}
+
+	function initEvent()
+	{
+		$("#connectBtn").click(onClick_connectBtn);
+		$("#sendGetBtn").click(onClick_sendGetBtn);
+		$("#sendPostBtn").click(onClick_sendPostBtn);
+		$("#sendSocketBtn").click(onClick_sendSocketBtn);
+	}
+
+	function onClick_connectBtn(e)
+	{
+		var ip = $("#ipTxt").val();
+		if (!ip)
+		{
+			return;
+		}
+		var url = ip;
+		var path = "";
+		var lastIndex = url.lastIndexOf("/");
+		if (lastIndex > 10)
+		{
+			path = url.substring(lastIndex);
+			url = url.substr(0, lastIndex);
+		}
+		if (!window.socketIsConnected && url)
+		{
+			window.socket = io(url, {
+				path: path,
+				transports: ["websocket", "polling"]
+			});
+			showLog("Connect: " + url + path, true);
+			socket.on('connect', function ()
+			{
+				save("ip", ip);
+				socketIsConnected = true;
+				showLog("Socket Server Connected!", true);
+				$("#sendSocketBtn").get(0).disabled = false;
+				$("#connectBtn").get(0).disabled = true;
+			});
+			socket.on("data", function (d)
+			{
+				if (d.cmd == "/test/chat")
+				{
+					showLog(d.data.name + ": " + d.data.msg);
+				}
+				else
+				{
+					showLog("接收到Socket数据:");
+					showLog(JSON.stringify(d, null, "　"));
+				}
+			});
+			socket.on('disconnect', function ()
+			{
+				showLog("------disconnect-----");
+			})
+		}
+	}
+
+	function onClick_sendGetBtn(e)
+	{
+		if (checkHttp())
+		{
+			var domain = $("#domainTxt").val();
+			var cmd = $("#cmdTxt").val();
+			var param = $("#paramTxt").val();
+			var dObj = formatData(param)
+			var url = domain + cmd;
+			url.indexOf("http://") < 0 && (url = "http://" + url);
+			showLog("发送Http get请求: " + url, true);
+			if (param)
+			{
+				showLog("参数: " + param, true);
+			}
+			$.get(url, dObj, function (d)
+			{
+				save("domain", domain);
+				save("cmd", cmd);
+				save("param", param);
+				showLog(JSON.stringify(d, null, "　"));
+			})
+		}
+	}
+
+	function onClick_sendPostBtn(e)
+	{
+		if (checkHttp())
+		{
+			var domain = $("#domainTxt").val();
+			var cmd = $("#cmdTxt").val();
+			var param = $("#paramTxt").val();
+			var dObj = formatData(param);
+			var url = domain + cmd;
+			url.indexOf("http://") < 0 && (url = "http://" + url);
+			showLog("发送Http post请求: " + url, true);
+			if (param)
+			{
+				showLog("参数: " + param, true);
+			}
+			$.post(url, dObj, function (d)
+			{
+				save("domain", domain);
+				save("cmd", cmd);
+				save("param", param);
+				showLog(JSON.stringify(d, null, "　"));
+			})
+		}
+	}
+
+	function onClick_sendSocketBtn(e)
+	{
+		if (checkSocket())
+		{
+			var cmd = $("#cmdTxt").val();
+			var param = $("#paramTxt").val();
+			var dObj = formatData(param);
+			if (cmd != "/test/chat")
+			{
+				showLog("发送Socket请求: " + cmd + " " + param, true);
+			}
+			socket.emit(cmd, dObj);
+		}
+	}
+
+	function checkHttp()
+	{
+		return !!$("#domainTxt").val() && !!$("#cmdTxt").val() && !!$("#paramTxt").val();
+	}
+
+	function checkSocket()
+	{
+		return window.socketIsConnected && !!$("#cmdTxt").val() && !!$("#paramTxt").val();
+	}
+
+	function formatData($data)
+	{
+		if ($data.charAt(0) == "{" && $data.charAt($data.length - 1) == "}")
+		{
+			try
+			{
+				$data = JSON.parse($data);
+			}
+			catch (e)
+			{
+			}
+		}
+
+		return $data || "";
+	}
+
+	function showLog($msg, $isInfo)
+	{
+		var infoP = $isInfo ? "<p class='info'>" : "<p>";
+		if (typeof $msg == "object")
+		{
+			$msg = JSON.stringify($msg);
+		}
+
+		$msg += "";
+		$msg = $msg.replace(/\n/g, "</p>" + infoP);
+		console.log($msg)
+		$("#logTxt").append(infoP + $msg + "</p>");
+		$("#logTxt").scrollTop($("#logTxt").get(0).scrollHeight);
+	}
+
+	function save(k, v)
+	{
+		var ls = window.localStorage;
+		ls[k] = v;
+	}
+</script>
+</html>                                                                                               

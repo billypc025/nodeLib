@@ -1,0 +1,657 @@
+html {
+	font-family: sans-serif;
+	-ms-text-size-adjust: 100%;
+	-webkit-text-size-adjust: 100%
+}
+
+body {
+	margin: 0;
+	padding:10px;
+}
+
+article, aside, details, figcaption, figure, footer, header, hgroup, main, menu, nav, section, summary {
+	display: block
+}
+
+audio, canvas, progress, video {
+	display: inline-block;
+	vertical-align: baseline
+}
+
+audio:not([controls]) {
+	display: none;
+	height: 0
+}
+
+[hidden], template {
+	display: none
+}
+
+a {
+	background-color: transparent
+}
+
+a:active, a:hover {
+	outline: 0
+}
+
+abbr[title] {
+	border-bottom: 1px dotted
+}
+
+b, strong {
+	font-weight: bold
+}
+
+dfn {
+	font-style: italic
+}
+
+h1 {
+	font-size: 2em;
+	margin: 0.67em 0
+}
+
+mark {
+	background: #ffff00;
+	color: #000000
+}
+
+small {
+	font-size: 80%
+}
+
+sub, sup {
+	font-size: 75%;
+	line-height: 0;
+	position: relative;
+	vertical-align: baseline
+}
+
+sup {
+	top: -0.5em
+}
+
+sub {
+	bottom: -0.25em
+}
+
+img {
+	border: 0
+}
+
+svg:not(:root) {
+	overflow: hidden
+}
+
+figure {
+	margin: 1em 40px
+}
+
+hr {
+	box-sizing: content-box;
+	height: 0
+}
+
+pre {
+	overflow: auto
+}
+
+code, kbd, pre, samp {
+	font-family: monospace, monospace;
+	font-size: 1em
+}
+
+button, input, optgroup, select, textarea {
+	color: inherit;
+	font: inherit;
+	margin: 0
+}
+
+button {
+	overflow: visible
+}
+
+button, select {
+	text-transform: none
+}
+
+button, html input[type="button"], input[type="reset"], input[type="submit"] {
+	-webkit-appearance: button;
+	cursor: pointer
+}
+
+button[disabled], html input[disabled] {
+	cursor: default
+}
+
+button::-moz-focus-inner, input::-moz-focus-inner {
+	border: 0;
+	padding: 0
+}
+
+input {
+	line-height: normal
+}
+
+input[type="checkbox"], input[type="radio"] {
+	box-sizing: border-box;
+	padding: 0
+}
+
+input[type="number"]::-webkit-inner-spin-button, input[type="number"]::-webkit-outer-spin-button {
+	height: auto
+}
+
+input[type="search"] {
+	-webkit-appearance: textfield;
+	box-sizing: content-box
+}
+
+input[type="search"]::-webkit-search-cancel-button, input[type="search"]::-webkit-search-decoration {
+	-webkit-appearance: none
+}
+
+fieldset {
+	border: 1px solid #c0c0c0;
+	margin: 0 2px;
+	padding: 0.35em 0.625em 0.75em
+}
+
+legend {
+	border: 0;
+	padding: 0
+}
+
+textarea {
+	overflow: auto
+}
+
+optgroup {
+	font-weight: bold
+}
+
+table {
+	border-collapse: collapse;
+	border-spacing: 0
+}
+
+td, th {
+	padding: 0
+}
+
+html {
+	font-size: 10px;
+	-webkit-tap-highlight-color: transparent
+}
+
+body {
+	font-family: "Source Sans Pro", "Helvetica Neue", Helvetica, Arial, sans-serif;
+	font-size: 15px;
+	line-height: 1.42857143;
+	color: #54565b;
+	background-color: #ffffff
+}
+
+input, button, select, textarea {
+	font-family: inherit;
+	font-size: inherit;
+	line-height: inherit
+}
+
+a {
+	color: #333c48;
+	text-decoration: none
+}
+
+a:hover, a:focus {
+	color: #13171b;
+	text-decoration: underline
+}
+
+a:focus {
+	outline: thin dotted;
+	outline: 5px auto -webkit-focus-ring-color;
+	outline-offset: -2px
+}
+
+figure {
+	margin: 0
+}
+
+img {
+	vertical-align: middle
+}
+
+hr {
+	margin-top: 21px;
+	margin-bottom: 21px;
+	border: 0;
+	border-top: 1px solid #eeeeee
+}
+
+h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
+	font-family: inherit;
+	font-weight: 500;
+	line-height: 1.1;
+	color: inherit
+}
+
+h1 small, h1 .small, h2 small, h2 .small, h3 small, h3 .small, h4 small, h4 .small, h5 small, h5 .small, h6 small, h6 .small, .h1 small, .h1 .small, .h2 small, .h2 .small, .h3 small, .h3 .small, .h4 small, .h4 .small, .h5 small, .h5 .small, .h6 small, .h6 .small {
+	font-weight: normal;
+	line-height: 1;
+	color: #f7f7f7
+}
+
+h1 {
+	margin-top: 21px;
+	margin-bottom: 10.5px
+}
+
+h1 small, h2 small, h3 small {
+	font-size: 65%
+}
+
+h4 {
+	margin-top: 10.5px;
+	margin-bottom: 10.5px
+}
+
+h4 small, h5 small, h6 small {
+	font-size: 75%
+}
+
+h1{
+	font-size: 39px
+}
+
+h2{
+	font-size: 32px
+}
+
+h3{
+	font-size: 26px
+}
+
+h4{
+	font-size: 19px
+}
+
+h5{
+	font-size: 15px
+}
+
+h6{
+	font-size: 13px
+}
+
+p {
+	margin: 0 0 10.5px
+}
+
+
+ul, ol {
+	margin-top: 0;
+	margin-bottom: 10.5px
+}
+
+ul ul, ul ol, ol ul, ol ol {
+	margin-bottom: 0
+}
+
+dl {
+	margin-top: 0;
+	margin-bottom: 21px
+}
+
+dt, dd {
+	line-height: 1.42857143
+}
+
+dt {
+	font-weight: bold
+}
+
+dd {
+	margin-left: 0
+}
+
+abbr[title], abbr[data-original-title] {
+	cursor: help;
+	border-bottom: 1px dotted #f7f7f7
+}
+
+code, kbd, pre, samp {
+	font-family: "Menlo", "Liberation Mono", "Consolas", "DejaVu Sans Mono", "Ubuntu Mono", "Courier New", "andale mono", "lucida console", monospace
+}
+
+blockquote {
+	padding: 10.5px 21px;
+	margin: 0 0 21px;
+	font-size: 18.75px;
+	border-left: 5px solid #eeeeee
+}
+
+blockquote p:last-child, blockquote ul:last-child, blockquote ol:last-child {
+	margin-bottom: 0
+}
+
+blockquote footer, blockquote small, blockquote .small {
+	display: block;
+	font-size: 80%;
+	line-height: 1.42857143;
+	color: #f7f7f7
+}
+
+blockquote footer:before, blockquote small:before, blockquote .small:before {
+	content: '\2014 \00A0'
+}
+
+.blockquote-reverse, blockquote.pull-right, #modal_merge_info .modal-dialog blockquote.btn-clipboard {
+	padding-right: 15px;
+	padding-left: 0;
+	border-right: 5px solid #eeeeee;
+	border-left: 0;
+	text-align: right
+}
+
+code {
+	padding: 2px 4px;
+	font-size: 90%;
+	color: #c7254e;
+	background-color: #f9f2f4;
+	border-radius: 2px
+}
+
+kbd {
+	padding: 2px 4px;
+	font-size: 90%;
+	color: #ffffff;
+	background-color: #333333;
+	border-radius: 2px;
+	box-shadow: inset 0 -1px 0 rgba(0, 0, 0, 0.25)
+}
+
+kbd kbd {
+	padding: 0;
+	font-size: 100%;
+	font-weight: bold;
+	box-shadow: none
+}
+
+pre {
+	display: block;
+	padding: 10px;
+	margin: 0 0 10.5px;
+	font-size: 14px;
+	line-height: 1.42857143;
+	word-break: break-all;
+	word-wrap: break-word;
+	color: #5a5a5a;
+	background-color: #f8fafc;
+	border: 1px solid #e7e9ed;
+	border-radius: 2px
+}
+
+pre code {
+	padding: 0;
+	font-size: inherit;
+	color: inherit;
+	white-space: pre-wrap;
+	background-color: transparent;
+	border-radius: 0
+}
+
+.container:after {
+	clear: both
+}
+
+@media (min-width: 768px) {
+	.container {
+		width: 750px
+	}
+}
+
+@media (min-width: 992px) {
+	.container {
+		width: 970px
+	}
+}
+
+@media (min-width: 1200px) {
+	.container {
+		width: 1170px
+	}
+}
+
+.file-content.code {
+	border: none;
+	box-shadow: none;
+	margin: 0px;
+	padding: 0px;
+	table-layout: fixed
+}
+
+.file-content.code pre {
+	padding: 10px;
+	border: none;
+	border-radius: 0;
+	font-family: "Menlo", "Liberation Mono", "Consolas", "DejaVu Sans Mono", "Ubuntu Mono", "Courier New", "andale mono", "lucida console", monospace;
+	font-size: 13px !important;
+	line-height: 1.5 !important;
+	margin: 0;
+	overflow: auto;
+	overflow-y: hidden;
+	white-space: pre;
+	word-wrap: normal;
+	border-left: 1px solid
+}
+
+.file-content.code pre code {
+	font-family: "Menlo", "Liberation Mono", "Consolas", "DejaVu Sans Mono", "Ubuntu Mono", "Courier New", "andale mono", "lucida console", monospace;
+	white-space: pre;
+	word-wrap: normal;
+	padding: 0
+}
+
+.file-content.code pre code .line {
+	display: inline-block
+}
+
+.file-content.code .line-numbers {
+	padding: 10px;
+	text-align: right;
+	float: left
+}
+
+.file-content.code .line-numbers a {
+	font-family: "Menlo", "Liberation Mono", "Consolas", "DejaVu Sans Mono", "Ubuntu Mono", "Courier New", "andale mono", "lucida console", monospace;
+	display: block;
+	font-size: 13px !important;
+	line-height: 1.5 !important;
+	white-space: nowrap
+}
+
+.file-content.code .line-numbers a i {
+	visibility: hidden
+}
+
+.file-content.code .line-numbers a:hover i {
+	visibility: visible
+}
+
+h1, h2, h3, h4, h5, h6 {
+	color: #323232;
+	font-weight: 500
+}
+
+pre {
+	font-family: "Menlo", "Liberation Mono", "Consolas", "DejaVu Sans Mono", "Ubuntu Mono", "Courier New", "andale mono", "lucida console", monospace
+}
+
+a > code {
+	color: #333c48
+}
+
+.wiki {
+	color: #444444;
+	word-wrap: break-word
+}
+
+.wiki a {
+	color: #3084bb
+}
+
+.wiki img {
+	max-width: 100%
+}
+
+.wiki *:first-child {
+	margin-top: 0
+}
+
+.wiki code {
+	font-family: "Menlo", "Liberation Mono", "Consolas", "DejaVu Sans Mono", "Ubuntu Mono", "Courier New", "andale mono", "lucida console", monospace;
+	white-space: pre;
+	word-wrap: normal
+}
+
+.wiki kbd {
+	display: inline-block;
+	padding: 3px 5px;
+	font-size: 11px;
+	line-height: 10px;
+	color: #555555;
+	vertical-align: middle;
+	background-color: #fcfcfc;
+	border-width: 1px;
+	border-style: solid;
+	border-color: #cccccc #cccccc #bbbbbb;
+	border-image: none;
+	border-radius: 3px;
+	box-shadow: 0px -1px 0px #bbbbbb inset
+}
+
+.wiki h1 {
+	font-size: 1.3em;
+	font-weight: 600;
+	margin: 24px 0 12px 0;
+	padding: 0 0 10px 0;
+	border-bottom: 1px solid #e7e9ed;
+	color: #313236
+}
+
+.wiki h2 {
+	font-size: 1.2em;
+	font-weight: 600;
+	margin: 24px 0 12px 0;
+	color: #313236
+}
+
+.wiki h3 {
+	margin: 24px 0 12px 0;
+	font-size: 1.1em
+}
+
+.wiki h4 {
+	margin: 24px 0 12px 0;
+	font-size: 0.98em
+}
+
+.wiki h5 {
+	margin: 24px 0 12px 0;
+	font-size: 0.95em
+}
+
+.wiki h6 {
+	margin: 24px 0 12px 0;
+	font-size: 0.90em
+}
+
+.wiki blockquote {
+	color: #7f8fa4;
+	font-size: inherit;
+	padding: 8px 21px;
+	margin: 12px 0 12px;
+	border-left: 3px solid #e7e9ed
+}
+
+.wiki blockquote p {
+	color: #7f8fa4 !important;
+	font-size: inherit;
+	line-height: 1.5
+}
+
+.wiki p {
+	color: #5c5d5e;
+	margin: 6px 0 0 0
+}
+
+.wiki table {
+	margin: 12px 0 12px 0;
+	color: #5c5d5e
+}
+
+.wiki table th {
+	background: #f8fafc
+}
+
+.wiki pre {
+	margin: 12px 0 12px 0;
+	font-size: 13px;
+	line-height: 1.6em;
+	overflow-x: auto;
+	-webkit-border-radius: 2px;
+	-moz-border-radius: 2px;
+	-ms-border-radius: 2px;
+	-o-border-radius: 2px;
+	border-radius: 2px
+}
+
+.wiki p > code {
+	font-weight: inherit
+}
+
+.wiki ul, .wiki ol {
+	padding: 0;
+	margin: 6px 0 6px 18px !important
+}
+
+.wiki li {
+	line-height: 1.6em
+}
+
+.wiki a[href*="/uploads/"]:before, .wiki a[href*="storage.googleapis.com/google-code-attachments/"]:before {
+	margin-right: 4px;
+	font: normal normal normal 14px/1 FontAwesome;
+	font-size: inherit;
+	text-rendering: auto;
+	-webkit-font-smoothing: antialiased;
+	content: "\f0c6"
+}
+
+.wiki a[href*="/uploads/"]:hover:before, .wiki a[href*="storage.googleapis.com/google-code-attachments/"]:hover:before {
+	text-decoration: none
+}
+
+.wiki h1, .wiki h2, .wiki h3, .wiki h4, .wiki h5, .wiki h6 {
+	position: relative
+}
+
+.wiki h1 a.anchor, .wiki h2 a.anchor, .wiki h3 a.anchor, .wiki h4 a.anchor, .wiki h5 a.anchor, .wiki h6 a.anchor {
+	height: 0
+}
+
+.wiki h1:hover > a.anchor, .wiki h2:hover > a.anchor, .wiki h3:hover > a.anchor, .wiki h4:hover > a.anchor, .wiki h5:hover > a.anchor, .wiki h6:hover > a.anchor {
+	position: absolute;
+	right: 100%;
+	top: 50%;
+	margin-top: -8px;
+	margin-right: 0px;
+	padding-right: 20px;
+	display: inline-block;
+	width: 16px;
+	height: 16px;
+	background-size: contain;
+	background-repeat: no-repeat
+}

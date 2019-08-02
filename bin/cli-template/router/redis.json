@@ -1,0 +1,10 @@
+{
+  "name": "$请输入服务名称",
+  "type": "redis",
+  "param": {
+	"port": 6379,
+	"host": "127.0.0.1",
+	"monitor": "$监控日志存放地址  ./log/redis/"
+  },
+  "enabled": true
+}

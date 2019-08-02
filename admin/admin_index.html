@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+	<title>NodeLib-Tool Admin</title>
+	<script src="https://lib.lookh5.com/jslib/zepto.1.2.0.min.js"></script>
+	<script src="https://lib.lookh5.com/jslib/vue.2.6.10.min.js"></script>
+	<link rel="stylesheet" href="https://lib.lookh5.com/jslib/element-ui.2.8.2.css">
+	<script src="https://lib.lookh5.com/jslib/element-ui.2.8.2.min.js"></script>
+	<script src="https://lib.lookh5.com/jslib/clipboard.min.js"></script>
+	<style>
+		h2 {
+			display: block;
+			background-color: #c0c0c0;
+			padding: 5px 0 5px 14px;
+			border-radius: 6px;
+		}
+
+		#app.div {
+			display: flex;
+			padding: 5px;
+		}
+
+		#app.div div {
+			padding: 0;
+			overflow: hidden;
+		}
+
+		#app.div div button {
+			margin: 0 5px;
+		}
+
+		.el-button + .el-button {
+			margin-left: 0px;
+		}
+
+		#app.div label {
+			width: 150px;
+			vertical-align: middle;
+		}
+
+		#background {
+			display: none;
+			position: fixed;
+			left: 0;
+			top: 0;
+			width: 100%;
+			height: 100%;
+			background-color: rgba(0, 0, 0, 0.5);
+		}
+
+		#div1 {
+			background: #eeeeee;
+			width: 400px;
+			z-index: 1;
+			margin: 12% auto;
+			overflow: auto;
+		}
+
+		#div2 {
+			background: #eeeeee;
+			margin: 20px;
+			height: 300px;
+			width: 300px;
+			padding: 0 20px;
+			overflow: auto;
+		}
+
+		#close {
+			padding: 5px;
+		}
+
+		#close-button {
+			float: right;
+			font-size: 30px;
+			color: black;
+		}
+
+		ul {
+			list-style: none;
+		}
+
+		.el-table .enabled-row {
+			background-color: #fff7f7;
+			color: #bb3333;
+		}
+
+		.el-table .table-head {
+			color: #ffffff;
+			background-color: #0055cc;
+		}
+
+		.el-table {
+			border-left: 1px solid #dddddd;
+			/*border-left: 1px solid #dddddd;*/
+			/*border-top: 1px solid #dddddd;*/
+			/*border-bottom: 1px solid #dddddd;*/
+		}
+
+		.el-table .el-table__row td {
+			border-right: 1px solid #dddddd;
+			border-bottom: 1px solid #dddddd;
+		}
+
+		.server-tool {
+			padding-top: 15px;
+			padding-left: 50px;
+			border-left: 1px solid #dddddd;
+			border-right: 1px solid #dddddd;
+			border-bottom: 1px solid #dddddd;
+			display: block;
+			height: 45px;
+		}
+
+		.git-con {
+			height: 30px;
+		}
+
+		.git-con span {
+			display: block;
+			float: left;
+		}
+
+		.git-pull-btn {
+			margin-left: 40px;
+			margin-top: -5px;
+		}
+
+		.el-message-box {
+			width: 520px;
+		}
+
+		.el-message-box__message {
+			text-align: left;
+		}
+
+		.el-tag {
+		}
+	</style>
+</head>
+<body>
+<div id="app">
+	<h2>
+		<p>路由配置: {{server.path}}</p>
+		<p>启动时间: {{server.startTime}} {{lastTime}}</p>
+		<p class="git-con" v-if="server.gitBranch">
+			<span>Git分支: {{server.gitBranch}}</span>
+			<span class="git-pull-btn">
+				<el-button size="mini" :loading="isLoadingGitPull" @click="onClick_gitPullBtn">git pull</el-button>
+			</span>
+		</p>
+		<p v-if="server.gitCommit">提交记录: {{server.gitCommit.id}} ({{server.gitCommit.time}})</p>
+	</h2>
+	<div>
+		<el-table ref="singleTable" :data="managerList" border
+				  header-cell-class-name="table-head" header-row-class-name="table-head"
+				  :row-class-name="tableRowClassName" style="width: 100%;">
+			<el-table-column type="index" label=" " width="50"></el-table-column>
+			<el-table-column property="type" label="服务" width="120"></el-table-column>
+			<el-table-column property="name" label="名称" width="120"></el-table-column>
+			<el-table-column property="info" label="信息">
+				<template slot-scope="scope">
+					<div v-for="infoItem of scope.row.info">
+						<div v-if="infoItem.type==1">
+							<div style="width: 40px; display: inline-block">
+								<el-tag size="mini">{{infoItem.name}}</el-tag>
+							</div>
+							{{infoItem.val}}
+						</div>
+						<div v-if="infoItem.type==2">
+							<el-tag type="warning" size="mini">{{infoItem.name}}</el-tag>
+							{{infoItem.val}} <i class="el-icon-caret-bottom"
+												@click="onClick_managerRouter(scope.row,infoItem)"></i>
+						</div>
+						<div v-if="infoItem.type==3">
+							<el-tag type="success" size="mini">{{infoItem.name}}</el-tag>
+							{{infoItem.val}} <i class="el-icon-caret-bottom"
+												@click="onClick_managerRouter(scope.row,infoItem)"></i>
+						</div>
+					</div>
+				</template>
+			</el-table-column>
+			<el-table-column prop="enabled" label="操作" width="90" header-align="center" align="center">
+				<template slot-scope="scope">
+					<el-tag type="danger" disable-transitions v-if="!scope.row.enabled">未启</el-tag>
+					<el-button :ref="'restartBtn_'+scope.row.name" size="mini" plain type="success"
+							   disable-transitions v-else @click="onClick_restartBtn(scope.row)">重启
+					</el-button>
+				</template>
+			</el-table-column>
+		</el-table>
+	</div>
+	<div class="server-tool">
+		<el-button size="mini" :type="isLoadingReboot?'':'primary'" @click="onClick_rebootBtn"
+				   :loading="isLoadingReboot">热重启
+		</el-button>
+	</div>
+</div>
+</body>
+</html>
+<script>
+	var g = {};
+	Object.defineProperty(g, "query", {
+		get: function ()
+		{
+			var query = {};
+			var url = window.location.href;
+			if (url.indexOf("?") > 0)
+			{
+				var queryStr = url.substr(url.indexOf("?") + 1);
+				queryStr.split('&').forEach(function (param)
+				{
+					var parts = param.replace(/\+/g, ' ').split('=')
+					var key = decodeURIComponent(parts.shift())
+					var val = parts.length > 0
+							? decodeURIComponent(parts.join('='))
+							: null
+
+					if (query[key] === undefined)
+					{
+						query[key] = val
+					}
+					else if (Array.isArray(query[key]))
+					{
+						query[key].push(val)
+					}
+					else
+					{
+						query[key] = [query[key], val]
+					}
+				})
+			}
+			return query;
+		},
+		set: function ($obj)
+		{
+			var str = "";
+			for (var k in $obj)
+			{
+				str && (str += "&");
+				str += k + "=" + $obj[k];
+			}
+			history.replaceState(null, null, "index?" + str);
+		},
+		enumerable: true,
+		configurable: false
+	})
+	var _api = window.location.href;
+	_api = _api.substr(0, _api.lastIndexOf("/") + 1);
+	var _loading;
+
+	var Main = {
+		data() {
+			return {
+				server: {serverData},
+				lastTime: "",
+				managerList: {managerList},
+				isLoadingReboot: {isRestarting},
+				isLoadingGitPull: false
+			}
+		},
+		created ()
+		{
+			var baseUrl = window.location.href;
+			baseUrl = baseUrl.substr(0, baseUrl.indexOf("/nodelib-tool/")) + "/nodelib-tool/";
+			this.baseUrl = baseUrl;
+			var now = parseInt(new Date().getTime() / 1000);
+			var time = now - parseInt(new Date(this.server.startTime) / 1000);
+			var lastTime = "";
+			if (time > 86400)
+			{
+				lastTime = parseInt(time / 86400) + "天";
+				time = time % 86400;
+			}
+			if (time > 3600)
+			{
+				lastTime += parseInt(time / 3600) + "小时";
+				time = time % 3600;
+			}
+			if (time > 60)
+			{
+				lastTime += parseInt(time / 60) + "分钟";
+				time = time % 60;
+			}
+			if (time > 0)
+			{
+				lastTime += time + "秒";
+			}
+			if (lastTime)
+			{
+				this.lastTime = "(" + lastTime + ")";
+			}
+			for (var managerItem of this.managerList)
+			{
+				managerItem.isLoading = false;
+			}
+			if (this.isLoadingReboot)
+			{
+				setTimeout(function ()
+				{
+					window.location.reload();
+				}, 3000);
+			}
+		},
+
+		methods: {
+			onSelect_menu($inx){
+				this.menuIndex = $inx;
+				g.query = {menuIndex: $inx};
+				if (this.menuIndex == 3)
+				{
+					this.getConf();
+				}
+			},
+			getLoading_managerItem($managerName)
+			{
+				return $managerName.isLoading;
+			},
+			tableRowClassName({row, rowIndex}) {
+				if (!this.managerList[rowIndex].enabled)
+				{
+					return "enabled-row";
+				}
+				return "";
+			},
+			onClick_gitPullBtn()
+			{
+				this.isLoadingGitPull = true;
+				callNet("git_fetch").then(($data)=>
+				{
+					if ($data)
+					{
+						$data = $data.replace(/\n/g, "<br/>")
+						$data = "<div style='height: 200px; overflow: auto'>" + $data + "</div>";
+						this.isLoadingGitPull = false;
+						this.$confirm($data, "是否拉取代码", {
+							type: "info",
+							dangerouslyUseHTMLString: true,
+							confirmButtonText: "Yes",
+							cancelButtonText: "No",
+							center: true
+						}).then(()=>
+						{
+							this.isLoadingGitPull = true;
+							callNet("git_pull").then(()=>
+							{
+								this.isLoadingGitPull = false;
+								this.$alert("拉取完成", {
+									confirmButtonText: "确定",
+									callback: action =>
+									{
+										window.location.reload();
+									}
+								});
+							});
+						})
+					}
+					else
+					{
+						this.isLoadingGitPull = false;
+						this.$message({
+							message: "没有新的更新!",
+							type: "success"
+						});
+					}
+				});
+			},
+			onClick_rebootBtn()
+			{
+				var successFunc = ()=>
+				{
+					this.isLoadingReboot = false;
+					this.$message({
+						type: 'success',
+						message: "重启成功!"
+					});
+				}
+				this.$confirm("是否确认重启所有服务?", "系统提示", {
+					confirmButtonText: "确定",
+					cancelButtonText: "取消",
+					type: 'warning'
+				}).then(()=>
+				{
+					this.isLoadingReboot = true;
+					callNet("reboot").then(successFunc, successFunc);
+				})
+			},
+			onClick_restartBtn($managerItem)
+			{
+				var successFunc = ()=>
+				{
+					this.$refs["restartBtn_" + $managerItem.name].loading = false;
+					this.$message({
+						type: 'success',
+						message: "重启成功!"
+					});
+				}
+				this.$refs["restartBtn_" + $managerItem.name].loading = true;
+				callNet("update_router", {name: $managerItem.name}).then(successFunc, successFunc);
+			},
+			onClick_managerRouter($managerItem, $infoItem)
+			{
+				trace($infoItem)
+			},
+			showLoading()
+			{
+				_loading = this.$loading({
+					lock: true,
+					text: 'Loading...',
+					spinner: 'el-icon-loading',
+					background: 'rgba(0, 0, 0, 0.7)'
+				});
+			},
+			hideLoading()
+			{
+				if (_loading)
+				{
+					_loading.close();
+					_loading = null;
+				}
+			}
+		}
+	}
+	var Ctor = Vue.extend(Main)
+	new Ctor().$mount('#app');
+
+	function callNet($url, $data, $callBack)
+	{
+		var promise = new Promise((resolved, reject)=>
+		{
+			$.ajax({
+				type: "POST",
+				url: _api + $url,
+				contentType: "application/json",
+				dataType: "json",
+				data: $data && JSON.stringify($data) || "{}",
+				success: function ($resultData)
+				{
+					resolved($resultData);
+				},
+				error: function ($errorData)
+				{
+					reject($errorData);
+				}
+			});
+		})
+		return promise;
+	}
+
+	function trace()
+	{
+		var arr = [];
+		for (var i = 0; i < arguments.length; i++)
+		{
+			arr.push(arguments[i]);
+		}
+		console.log.apply(console, arr);
+	}
+</script>

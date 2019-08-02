@@ -1,0 +1,76 @@
+@charset "UTF-8";
+* {
+	margin: 5px;
+}
+
+label, button{
+	moz-user-select: -moz-none;
+	-moz-user-select: none;
+	-o-user-select: none;
+	-khtml-user-select: none;
+	-webkit-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+}
+
+body, html {
+	margin: 10px;
+	font-family: HanHeiSC, PingFang SC, Helvetica Neue, Helvetica, STHeitiSC-Light, '\5b8b\4f53', Arial, sans-serif;
+}
+
+.block {
+	display: block;
+	max-width: 480px;
+	margin: 0px;
+}
+
+.net {
+	width: 1000px;
+	margin: 0px;
+	display: flex;
+	flex-direction: row;
+}
+
+.block label {
+	text-align: center;
+	width: 40px;
+	display: inline-block;
+	background: #cccccc;
+	border: 1px solid #555555;
+	font-size: 14px;
+	padding: 4px;
+}
+
+button {
+	height: 26px;
+	width: 100px;
+}
+
+.block input {
+	border: 1px solid #555555;
+	font-size: 16px;
+	padding: 3px;
+	width: 400px;
+}
+
+.block.call label {
+	border: 1px solid #555555;
+	background: #30cca4;
+	color: #ffffff;
+}
+
+.block.call input {
+	border: 1px solid #008800;
+}
+
+.log-text {
+	background: #ffffff;
+	border: 1px solid #cccccc;
+	height: 600px;
+	width: 800px;
+	overflow: auto;
+}
+
+p.info {
+	color: #3084bb;
+}

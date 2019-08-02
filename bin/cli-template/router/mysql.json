@@ -1,0 +1,11 @@
+{
+  "name": "$服务名称",
+  "type": "mysql",
+  "param": {
+	"host": "localhost",
+	"user": "$用户账号",
+	"password": "$用户密码",
+	"database": "$库名称"
+  },
+  "enabled": true
+}
